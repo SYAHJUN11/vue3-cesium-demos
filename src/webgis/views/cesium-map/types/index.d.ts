@@ -1,4 +1,4 @@
-export interface IMap {
+export interface IViewer {
   animation?: boolean // 动画组件的显示
   baseLayerPicker?: boolean // 图层选择组件的显示
   fullscreenButton?: boolean // 全屏按钮的显示
@@ -9,4 +9,5 @@ export interface IMap {
   sceneModePicker?: boolean // 二三维切换部件
   timeline?: boolean // 时间线控件
   navigationHelpButton?: boolean // 帮助信息控件
+  selectionIndicator?: boolean // 选中地图元素标识控件
 }
