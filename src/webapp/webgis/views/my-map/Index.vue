@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import CesiumMap from '../../../../components/cesium-map'
+import CesiumMap from '@/components/cesium-map'
 </script>
 
 <style lang="less" scoped>
