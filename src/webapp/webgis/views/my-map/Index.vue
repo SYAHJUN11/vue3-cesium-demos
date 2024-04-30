@@ -10,6 +10,8 @@ import CesiumMap from '@/components/cesium-map'
 
 <style lang="less" scoped>
 .map-view {
-
+	position: relative;
+  width: 100%;
+  height: 100%;
 }
 </style>

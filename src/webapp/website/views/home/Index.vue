@@ -11,7 +11,8 @@ import MyMap from '@/webapp/webgis/views/my-map/Index.vue'
 
 <style lang="less" scoped>
 .home-wrapper {
-  width: 100%;
-  height: 100%;
+	position: relative;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
