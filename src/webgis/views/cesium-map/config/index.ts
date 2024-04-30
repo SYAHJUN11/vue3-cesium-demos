@@ -1,5 +1,7 @@
-import { TdtVectorLayerUrl } from './baseLayerUrl'
+import { TdtVectorLayerUrl, TdtLabelLayerUrl, TdtImageLayerUrl } from './baseLayerUrl'
 
 export {
   TdtVectorLayerUrl,
+  TdtLabelLayerUrl,
+  TdtImageLayerUrl,
 }

@@ -1,6 +1,6 @@
 import { type IViewer } from "../types"
 import * as Cesium from "cesium"
-import { TdtVectorLayerUrl } from '../config'
+import { TdtVectorLayerUrl, TdtLabelLayerUrl, TdtImageLayerUrl } from '../config'
 
 /**
  * 初始化地图
@@ -15,20 +15,25 @@ function initCesiumViewer(
     ...config,
   })
 
-  viewer.imageryLayers.remove(viewer.imageryLayers.get(0)) // 移除默认影像
+  viewer.imageryLayers.remove(viewer.imageryLayers.get(0)) // 移除默认影像图层
 
-  viewer.scene.globe.enableLighting = true // 启用光照
-  const tdtVectorWMTSLayer = new Cesium.WebMapTileServiceImageryProvider({
-    url: 'http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=1ced9dd2eb65e01576a9dc94b3a831f7',
-    layer: "img",
-    style: "default",
-    format: "tiles",
-    tileMatrixSetID: 'w',
-    subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-    minimumLevel: 0,
-    maximumLevel: 18
+  const tdtVectorLayer = new Cesium.WebMapTileServiceImageryProvider({ // 天地图矢量图层
+    url: TdtVectorLayerUrl,
+    format: 'image/png',
+    layer: 'tdt-vec',
+    style: 'default',
+    tileMatrixSetID: 'GoogleMapsCompatible',
   })
-  viewer.imageryLayers.addImageryProvider(tdtVectorWMTSLayer)
+  viewer.imageryLayers.addImageryProvider(tdtVectorLayer)
+  
+  const tdtLabelLayer = new Cesium.WebMapTileServiceImageryProvider({ // 天地图label图层
+    url: TdtLabelLayerUrl,
+    format: 'image/jpeg',
+    layer: 'tdt-label',
+    style: 'default',
+    tileMatrixSetID: 'GoogleMapsCompatible',
+  })
+  viewer.imageryLayers.addImageryProvider(tdtLabelLayer)
 
   return viewer
 }
