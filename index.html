@@ -5,6 +5,23 @@
     <link rel="icon" type="image/svg+xml" href="/earth.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cesium Demos</title>
+    <style>
+      /* 隐藏最外层滚动条，但允许滚动 */
+      html, body {
+        overflow: hidden; /* 隐藏滚动条 */
+        height: 100vh; /* 设置高度为100% */
+        width: 100vw; /* 设置宽度为100% */
+        margin: 0; /* 移除默认边距 */
+        padding: 0; /* 移除默认填充 */
+      }
+      
+      /* 内部可滚动区域 */
+      .scrollable-content {
+        height: 100%; /* 设置高度为100% */
+        overflow-y: scroll; /* 允许垂直滚动 */
+        -webkit-overflow-scrolling: touch; /* 在移动设备上优化滚动 */
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>

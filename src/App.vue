@@ -1,5 +1,4 @@
 <template>
-  <!-- <cesium-map @init-finished="initFinished" /> -->
   <router-view />
 </template>
 
