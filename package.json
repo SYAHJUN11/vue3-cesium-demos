@@ -13,7 +13,8 @@
     "cesium": "^1.115.0",
     "less": "^4.2.0",
     "vite-plugin-cesium": "^1.2.22",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
