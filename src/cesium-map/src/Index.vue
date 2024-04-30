@@ -5,7 +5,8 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { type IViewer } from '../types'
-import { initCesiumViewer } from '../hooks/useViewer'
+import { useViewer } from '../hooks/useViewer'
+import { useBaseLayer } from '../hooks/useBaseLayer'
 
 const $emits = defineEmits(['init-finished'])
 
@@ -28,9 +29,21 @@ const viewerConfig: IViewer = {
 const mapRef = ref()
 
 onMounted(() => {
-  const viewer = initCesiumViewer(mapRef.value, viewerConfig)
-  $emits('init-finished', viewer)
+  initMap()
 })
+
+/**
+ * 初始化地图
+ */
+function initMap() {
+  const viewer = useViewer(mapRef.value, viewerConfig)
+  const baseLayer = useBaseLayer()
+
+  viewer.imageryLayers.add(baseLayer[0])
+  viewer.imageryLayers.add(baseLayer[1])
+
+  $emits('init-finished', viewer)
+}
 </script>
 
 <style lang="less" scoped>
