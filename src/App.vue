@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import CesiumMap from './webgis/views/cesium-map'
+import CesiumMap from './cesium-map'
 
 function initFinished(viewer: any) {
   console.log('viewer', viewer)
