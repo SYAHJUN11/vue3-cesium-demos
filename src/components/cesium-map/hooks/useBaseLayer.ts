@@ -29,7 +29,7 @@ function addTdtVectorLayer2Map(viewer: Viewer) {
  * 添加天地图矢量图层到地图
  * @param viewer 
  */
-function getTdtImageLayer2Map() {
+function getTdtImageLayer2Map(): Cesium.ImageryLayer[] {
   const tdtImageLayer = new Cesium.ImageryLayer( // 天地图影像图层
     new Cesium.WebMapTileServiceImageryProvider({
       url: TdtImageLayerUrl,
@@ -53,7 +53,7 @@ function getTdtImageLayer2Map() {
   return [tdtImageLayer, tdtImageLabelLayer]
 }
 
-function useBaseLayer() {
+function useBaseLayer(): Cesium.ImageryLayer[] {
   return getTdtImageLayer2Map()
 }
 

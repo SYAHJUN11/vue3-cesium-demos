@@ -35,7 +35,7 @@ onMounted(() => {
 /**
  * 初始化地图
  */
-function initMap() {
+function initMap(): void {
   const viewer = useViewer(mapRef.value, viewerConfig)
   const baseLayer = useBaseLayer()
 

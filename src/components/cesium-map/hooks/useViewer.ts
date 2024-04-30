@@ -8,7 +8,7 @@ import { type IViewer } from '../types'
 function useViewer(
   container: string | Element,
   config?: IViewer
-) {
+): Cesium.Viewer {
   const viewer = new Cesium.Viewer(container, {
     ...config,
   })
