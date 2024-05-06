@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     Index: typeof import('./src/components/cesium-map/src/Index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
