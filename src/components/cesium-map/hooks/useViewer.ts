@@ -13,7 +13,7 @@ function useViewer(
     ...config,
   })
 
-  viewer.imageryLayers.remove(viewer.imageryLayers.get(0)) // 移除默认影像图层
+  viewer.imageryLayers.removeAll() // 移除默认影像图层
 
   return viewer
 }

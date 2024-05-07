@@ -13,9 +13,10 @@
 import type { Viewer } from 'cesium'
 import CesiumMap from '@/components/cesium-map'
 import MapBottomTools from './components/map-bottom-tools/Index.vue'
+import { mapStore } from './store'
 
 function initFinished(viewer: Viewer) {
-	console.log('initFinished', viewer.camera.position)
+	mapStore.setViewerInstance(viewer)
 }
 </script>
 
