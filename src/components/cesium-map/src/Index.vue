@@ -37,12 +37,18 @@ onMounted(() => {
  */
 function initMap(): void {
   const viewer = useViewer(mapRef.value, viewerConfig)
-  const baseLayer = useBaseLayer()
+  const baseLayers = useBaseLayer()
 
-  viewer.imageryLayers.add(baseLayer[0])
-  viewer.imageryLayers.add(baseLayer[1])
+  viewer.imageryLayers.add(baseLayers.imageLayers[0])
+  viewer.imageryLayers.add(baseLayers.imageLayers[1])
 
-  $emits('init-finished', viewer)
+  viewer.imageryLayers.add(baseLayers.vectorLayers[0])
+  viewer.imageryLayers.add(baseLayers.vectorLayers[1])
+
+  baseLayers.vectorLayers[0].show = false
+  baseLayers.vectorLayers[1].show = false
+
+  $emits('init-finished', viewer, baseLayers)
 }
 </script>
 

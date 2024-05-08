@@ -1,17 +1,13 @@
 <template>
   <div class="map-bottom-tools">
     <a-tooltip overlayClassName="button-tip" title="切换底图" color="#096dd9">
-      <a-dropdown trigger="click" placement="top" v-model:open="isOpenChangeBaseLayer">
+      <a-dropdown trigger="click" placement="topLeft" v-model:open="isOpenChangeBaseLayer">
         <template #overlay>
-          <a-menu
-            class="base-layer-menus"
-            triggerSubMenuAction="click"
-            @click="changeBaseLayer"
-          >
-            <a-menu-item key="img_w" :class="{ 'active-menu-item': selectedMapKeys.indexOf('img_w') > -1 }">
+          <a-menu class="base-layer-menus" triggerSubMenuAction="click" @click="onChangeBaseLayer">
+            <a-menu-item key="tdt-image" :class="{ 'active-menu-item': selectedMapKeys.indexOf('tdt-image') > -1 }">
               遥感地图
             </a-menu-item>
-            <a-menu-item key="vec_w" :class="{ 'active-menu-item': selectedMapKeys.indexOf('vec_w') > -1 }">
+            <a-menu-item key="tdt-vector" :class="{ 'active-menu-item': selectedMapKeys.indexOf('tdt-vector') > -1 }">
               规划地图
             </a-menu-item>
           </a-menu>
@@ -25,7 +21,7 @@
       </a-dropdown>
     </a-tooltip>
     <a-tooltip overlayClassName="button-tip" title="放大" color="#096dd9">
-      <div class="button">
+      <div class="button" @click="zoomIn">
         <svg class="svg-icon" width="16" height="16" viewBox="0 0 16 16">
           <path
             d="M13.1275 7.0275C13.1275 3.6675 10.3875 0.9375 7.0275 0.9375C3.6675 0.9375 0.9375 3.6675 0.9375 7.0275C0.9375 10.3875 3.6675 13.1275 7.0275 13.1275C8.4275 13.1275 9.7075 12.6475 10.7275 11.8575L12.8075 13.9375C12.8075 13.9375 12.8975 14.0075 12.9575 14.0375L13.1375 14.0675C13.1975 14.0675 13.2575 14.0575 13.3175 14.0375L13.4675 13.9375C13.5575 13.8475 13.6075 13.7275 13.6075 13.6075C13.6075 13.6075 13.5575 13.3575 13.4675 13.2675L11.4275 11.2375C12.4775 10.1375 13.1275 8.6575 13.1275 7.0275ZM7.0274 1.8774C9.8774 1.8774 12.1874 4.1874 12.1874 7.0274C12.1874 9.8774 9.8774 12.1874 7.0274 12.1874C4.1874 12.1874 1.8774 9.8774 1.8774 7.0274C1.8774 4.1874 4.1874 1.8774 7.0274 1.8774Z" />
@@ -35,7 +31,7 @@
       </div>
     </a-tooltip>
     <a-tooltip overlayClassName="button-tip" title="缩小" color="#096dd9">
-      <div class="button">
+      <div class="button" @click="zoomOut">
         <svg class="svg-icon" width="16" height="16" viewBox="0 0 16 16">
           <path
             d="M13.1275 7.0275C13.1275 3.6675 10.3875 0.9375 7.0275 0.9375C3.6675 0.9375 0.9375 3.6675 0.9375 7.0275C0.9375 10.3875 3.6675 13.1275 7.0275 13.1275C8.4275 13.1275 9.7075 12.6475 10.7275 11.8575L12.8075 13.9375C12.8075 13.9375 12.8975 14.0075 12.9575 14.0375L13.1375 14.0675C13.1975 14.0675 13.2575 14.0575 13.3175 14.0375L13.4675 13.9375C13.5575 13.8475 13.6075 13.7275 13.6075 13.6075C13.6075 13.6075 13.5575 13.3575 13.4675 13.2675L11.4275 11.2375C12.4775 10.1375 13.1275 8.6575 13.1275 7.0275ZM7.0274 1.8774C9.8774 1.8774 12.1874 4.1874 12.1874 7.0274C12.1874 9.8774 9.8774 12.1874 7.0274 12.1874C4.1874 12.1874 1.8774 9.8774 1.8774 7.0274C1.8774 4.1874 4.1874 1.8774 7.0274 1.8774Z" />
@@ -50,13 +46,16 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 // import { mapStore } from '../../store'
+import { changeBaseLayer } from '../../hooks/useLayers'
+import { zoomIn, zoomOut } from '../../hooks/mapEvents'
 
-const selectedMapKeys = ref<string[]>(['img_w'])
+const selectedMapKeys = ref<string[]>(['tdt-image'])
 const isOpenChangeBaseLayer = ref<boolean>(false)
 
-function changeBaseLayer(e: any) {
-  console.log('selectedMapKeys', e)
+function onChangeBaseLayer(e: any) {
+  // console.log('selectedMapKeys', e)
   selectedMapKeys.value = [e.key]
+  changeBaseLayer(e.key)
 }
 </script>
 

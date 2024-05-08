@@ -10,13 +10,17 @@
 </template>
 
 <script lang="ts" setup>
-import type { Viewer } from 'cesium'
+import type { Viewer, ImageryLayer } from 'cesium'
 import CesiumMap from '@/components/cesium-map'
 import MapBottomTools from './components/map-bottom-tools/Index.vue'
 import { mapStore } from './store'
 
-function initFinished(viewer: Viewer) {
+function initFinished(viewer: Viewer, baseLayers: {
+	imageLayers: ImageryLayer[],
+	vectorLayers: ImageryLayer[]
+}) {
 	mapStore.setViewerInstance(viewer)
+	mapStore.setBaseLayers(baseLayers)
 }
 </script>
 

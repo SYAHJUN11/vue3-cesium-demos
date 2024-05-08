@@ -54,8 +54,14 @@ function getTdtImageLayer2Map(): Cesium.ImageryLayer[] {
   return [tdtImageLayer, tdtImageLabelLayer]
 }
 
-function useBaseLayer(): Cesium.ImageryLayer[] {
-  return getTdtImageLayer2Map()
+function useBaseLayer(): {
+  imageLayers: Cesium.ImageryLayer[],
+  vectorLayers: Cesium.ImageryLayer[],
+} {
+  return {
+    imageLayers: getTdtImageLayer2Map(),
+    vectorLayers: getTdtVectorLayer2Map(),
+  }
 }
 
 export {
