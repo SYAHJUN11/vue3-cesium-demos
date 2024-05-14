@@ -1,4 +1,6 @@
-import { mapStore } from "../store"
+import { useMapStore } from '../store/map.ts'
+
+const mapStore = useMapStore()
 /**
  * 放大
  */

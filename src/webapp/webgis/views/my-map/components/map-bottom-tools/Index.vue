@@ -45,7 +45,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-// import { mapStore } from '../../store'
 import { changeBaseLayer } from '../../hooks/useLayers'
 import { zoomIn, zoomOut } from '../../hooks/mapEvents'
 

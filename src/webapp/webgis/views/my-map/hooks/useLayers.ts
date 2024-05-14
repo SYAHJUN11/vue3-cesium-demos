@@ -1,5 +1,7 @@
 import * as Cesium from 'cesium'
-import { mapStore } from '../store'
+import { useMapStore } from '../store/map'
+
+const mapStore = useMapStore()
 export function changeBaseLayer(type: string) {
   const baseLayers = mapStore.getBaseLayers
   if (type === 'tdt-vector') {

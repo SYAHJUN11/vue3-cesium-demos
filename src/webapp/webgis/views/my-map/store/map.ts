@@ -9,7 +9,7 @@ interface IMapStore {
 	} | null
 }
 
-const useMapStore = defineStore('viewerStore', {
+export const useMapStore = defineStore('map', {
 	state: (): IMapStore => {
 		return {
 			viewerInstance: null,
@@ -32,7 +32,3 @@ const useMapStore = defineStore('viewerStore', {
 		},
 	}
 })
-
-const mapStore = useMapStore()
-
-export default mapStore

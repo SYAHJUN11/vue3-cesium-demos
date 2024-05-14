@@ -13,7 +13,9 @@
 import type { Viewer, ImageryLayer } from 'cesium'
 import CesiumMap from '@/components/cesium-map'
 import MapBottomTools from './components/map-bottom-tools/Index.vue'
-import { mapStore } from './store'
+import { useMapStore } from './store/map.ts'
+
+const mapStore = useMapStore()
 
 function initFinished(viewer: Viewer, baseLayers: {
 	imageLayers: ImageryLayer[],
