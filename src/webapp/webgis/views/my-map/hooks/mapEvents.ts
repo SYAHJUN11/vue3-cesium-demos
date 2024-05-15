@@ -5,7 +5,7 @@ const mapStore = useMapStore()
  * 放大
  */
 export function zoomIn() {
-  const viewer = mapStore.getViewerInstance
+  const viewer = mapStore.viewerInstance
   const camera = viewer?.camera
   camera?.zoomIn()
 }
@@ -14,7 +14,7 @@ export function zoomIn() {
  * 缩小
  */
 export function zoomOut() {
-  const viewer = mapStore.getViewerInstance
+  const viewer = mapStore.viewerInstance
   const camera = viewer?.camera
   camera?.zoomOut()
 }

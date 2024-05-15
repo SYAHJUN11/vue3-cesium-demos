@@ -3,7 +3,7 @@ import { useMapStore } from '../store/map'
 
 const mapStore = useMapStore()
 export function changeBaseLayer(type: string) {
-  const baseLayers = mapStore.getBaseLayers
+  const baseLayers = mapStore.baseLayers
   if (type === 'tdt-vector') {
     const vectorLayers = baseLayers?.vectorLayers
     const imageLayers = baseLayers?.imageLayers

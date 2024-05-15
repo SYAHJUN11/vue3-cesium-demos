@@ -21,8 +21,8 @@ function initFinished(viewer: Viewer, baseLayers: {
 	imageLayers: ImageryLayer[],
 	vectorLayers: ImageryLayer[]
 }) {
-	mapStore.setViewerInstance(viewer)
-	mapStore.setBaseLayers(baseLayers)
+	mapStore.viewerInstance = viewer
+	mapStore.baseLayers = baseLayers
 }
 </script>
 
