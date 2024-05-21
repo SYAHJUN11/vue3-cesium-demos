@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import * as Cesium from 'cesium'
+import "ol/ol.css"
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './webapp/website/router'

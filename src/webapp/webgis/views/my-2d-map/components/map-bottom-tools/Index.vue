@@ -51,22 +51,20 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { changeBaseLayer } from '../../hooks/useLayers'
 import { zoomIn, zoomOut } from '../../hooks/mapEvents'
 
 const router = useRouter()
 const selectedMapKeys = ref<string[]>(['tdt-image'])
 const isOpenChangeBaseLayer = ref<boolean>(false)
-const currentMode = ref<string>('3D')
+const currentMode = ref<string>('2D')
 
 function onChangeBaseLayer(e: any) {
   console.log('selectedMapKeys', e)
   selectedMapKeys.value = [e.key]
-  changeBaseLayer(e.key)
 }
 
 function onChangeMapMode() {
-  router.push('/my-2d-map')
+  router.push('/home')
 }
 </script>
 

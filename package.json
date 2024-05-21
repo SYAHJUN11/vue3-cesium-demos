@@ -12,6 +12,7 @@
     "ant-design-vue": "^4.2.1",
     "cesium": "^1.115.0",
     "less": "^4.2.0",
+    "ol": "^9.2.2",
     "pinia": "^2.1.7",
     "vite-plugin-cesium": "^1.2.22",
     "vue": "^3.4.21",

@@ -29,13 +29,13 @@ const viewerConfig: IViewer = {
 const mapRef = ref()
 
 onMounted(() => {
-  initMap()
+  initViewer()
 })
 
 /**
  * 初始化地图
  */
-function initMap(): void {
+function initViewer(): void {
   const viewer = useViewer(mapRef.value, viewerConfig)
   const baseLayers = useBaseLayer()
 

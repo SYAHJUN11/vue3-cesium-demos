@@ -13,8 +13,20 @@ const router = createRouter({
     },
     {
       path: '/home',
-      component: () => import('../views/home/Index.vue')
+      component: () => import('../views/home/Index.vue'),
+      meta: {
+        title: '首页',
+        keepAlive: true,
+      }
     },
+    {
+      path: '/my-2d-map',
+      component: () => import('@/webapp/webgis/views/my-2d-map/Index.vue'),
+      meta: {
+        title: '二维地图',
+        keepAlive: true,
+      }
+    }
   ]
 })
 
