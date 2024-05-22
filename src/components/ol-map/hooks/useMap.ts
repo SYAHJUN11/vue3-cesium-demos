@@ -10,9 +10,7 @@ function useMap(container: HTMLElement | string, options?: any): Map {
       maxZoom: options.maxZoom || 18,
       minZoom: options.minZoom || 0,
     }),
-    layers: [
-      options.baseLayer,
-    ],
+    layers: options.baseLayers || [],
     controls: defaults({
       // 清除地图上的控件
       attribution: false,

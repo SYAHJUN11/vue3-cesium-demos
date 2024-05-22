@@ -7,16 +7,7 @@
   </router-view>
 </template>
 
-<script lang="ts" setup>
-import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-
-onMounted(() => {
-  console.log('rrrrr', route.meta.keepAlive)
-})
-</script>
+<script lang="ts" setup></script>
 
 <style scoped>
 html,
