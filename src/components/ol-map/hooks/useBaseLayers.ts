@@ -4,7 +4,7 @@ import { WMTS } from 'ol/source'
 import * as olExtent from 'ol/extent'
 import * as olProj from 'ol/proj'
 import * as olTileGrid from 'ol/tilegrid'
-import { TdtImgLayer_W, TdtImgLabelLayer_W } from '../config'
+import { TdtImgLayer_W, TdtImgLabelLayer_W, TdtVectorLayer_W, TdtVectorLabelLayer_W } from '../config'
 
 const projection = olProj.get('EPSG:900913')
 const projectionExtent = projection?.getExtent() as Extent
@@ -21,7 +21,10 @@ let wmtsTileGrid = new olTileGrid.WMTS({
   matrixIds: matrixIds, // 矩阵ID，就是瓦片坐标系z维度各个层级的标识
 })
 
-console.log('projection', projection)
+/**
+ * 影像图层（投影：EPSG:990913，包含标注）
+ * @returns 
+ */
 function useTdtImageLayers() {
   const imageSource = new WMTS({
     url: TdtImgLayer_W.url,
@@ -49,6 +52,39 @@ function useTdtImageLayers() {
   ]
 }
 
+/**
+ * 矢量图层（投影：EPSG:990913，包含标注）
+ * @returns 
+ */
+function useTdtVectorLayers() {
+  const vectorSource = new WMTS({
+    url: TdtVectorLayer_W.url,
+    layer: TdtVectorLayer_W.layer,
+    style: 'default',
+    matrixSet: TdtVectorLayer_W.matrixSet,
+    tileGrid: wmtsTileGrid,
+  })
+  const vectorLayer = new TileLayer({
+    source: vectorSource,
+  })
+
+  const vectorLabelSource = new WMTS({
+    url: TdtVectorLabelLayer_W.url,
+    layer: TdtVectorLabelLayer_W.layer,
+    style: 'default',
+    matrixSet: TdtVectorLayer_W.matrixSet,
+    tileGrid: wmtsTileGrid,
+  })
+  const vectorLabelLayer = new TileLayer({
+    source: vectorLabelSource,
+  })
+  return [
+    vectorLayer,
+    vectorLabelLayer,
+  ]
+}
+
 export {
-  useTdtImageLayers
+  useTdtImageLayers,
+  useTdtVectorLayers,
 }

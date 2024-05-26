@@ -1,7 +1,5 @@
 <template>
-  <div class="ol-map" ref="mapRef">
-
-  </div>
+  <div class="ol-map" ref="mapRef"></div>
 </template>
 
 <script lang="ts" setup>
