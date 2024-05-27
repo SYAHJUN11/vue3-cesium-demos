@@ -60,7 +60,6 @@ const isOpenChangeBaseLayer = ref<boolean>(false)
 const currentMode = ref<string>('3D')
 
 function onChangeBaseLayer(e: any) {
-  console.log('selectedMapKeys', e)
   selectedMapKeys.value = [e.key]
   changeBaseLayer(e.key)
 }
