@@ -11,6 +11,7 @@ function getTdtVectorLayer2Map() {
       layer: 'tdt-vec',
       style: 'default',
       tileMatrixSetID: 'GoogleMapsCompatible',
+      subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
     })
   )
 
@@ -21,6 +22,7 @@ function getTdtVectorLayer2Map() {
       layer: 'tdt-vec-label',
       style: 'default',
       tileMatrixSetID: 'GoogleMapsCompatible',
+      subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
     })
   )
 
@@ -38,6 +40,7 @@ function getTdtImageLayer2Map(): Cesium.ImageryLayer[] {
       layer: 'tdt-img',
       style: 'default',
       tileMatrixSetID: 'GoogleMapsCompatible',
+      subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
     })
   )
 
@@ -48,6 +51,7 @@ function getTdtImageLayer2Map(): Cesium.ImageryLayer[] {
       layer: 'tdt-img-label',
       style: 'default',
       tileMatrixSetID: 'GoogleMapsCompatible',
+      subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
     })
   )
 

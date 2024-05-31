@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^4.2.1",
-    "cesium": "^1.115.0",
+    "cesium": "^1.117.0",
     "less": "^4.2.0",
     "ol": "^9.2.2",
     "pinia": "^2.1.7",

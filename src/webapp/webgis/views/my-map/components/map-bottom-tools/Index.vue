@@ -45,6 +45,7 @@
         </svg>
       </div>
     </a-tooltip>
+    <slot></slot>
   </div>
 </template>
 

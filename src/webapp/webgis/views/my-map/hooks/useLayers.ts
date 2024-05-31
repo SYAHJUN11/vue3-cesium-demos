@@ -32,3 +32,25 @@ export function changeBaseLayer(type: string) {
     }
   }
 }
+/**
+ * 添加3D Tiles到地图
+ * @param url 
+ * @param options 
+ * @returns 
+ */
+export async function add3DTileset(url: string | number, options?:any) {
+  const viewer = mapStore.viewerInstance
+  let tileset = {} as Cesium.Cesium3DTileset
+  try {
+    if (typeof url === 'number') {
+      tileset = await Cesium.Cesium3DTileset.fromIonAssetId(url, options)
+    } else {
+      tileset = await Cesium.Cesium3DTileset.fromUrl(url, options)
+    }
+		viewer?.scene.primitives.add(tileset)
+	} catch(e) {
+		console.log('error', e)
+	}
+
+  return tileset
+}

@@ -2,6 +2,7 @@
 
 // 引入createRouter、createWebHistory
 import { createRouter, createWebHistory } from 'vue-router'
+import { GisRouteList } from '@/webapp/webgis/router'
 
 // 创建路由器
 const router = createRouter({
@@ -26,7 +27,8 @@ const router = createRouter({
         title: '二维地图',
         keepAlive: true,
       }
-    }
+    },
+    ...GisRouteList
   ]
 })
 
