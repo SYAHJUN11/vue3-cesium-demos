@@ -14,7 +14,7 @@ const mapRef = ref()
 const mapOptions = reactive({
   baseLayers: null as any,
   center: fromLonLat([104.06, 30.67]), // 成都
-  zoom: 10, // 设置初始化时的地图缩放层级
+  zoom: 16, // 设置初始化时的地图缩放层级
   projection: 'EPSG:3857', // 坐标系
   maxZoom: 18, // 最大缩放层级
   minZoom: 4, // 最小缩放层级

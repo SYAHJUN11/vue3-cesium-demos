@@ -11,7 +11,6 @@ declare module 'vue' {
     ADropdown: typeof import('ant-design-vue/es')['Dropdown']
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
-    ASelect: typeof import('ant-design-vue/es')['Select']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     Index: typeof import('./src/components/cesium-map/src/Index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
