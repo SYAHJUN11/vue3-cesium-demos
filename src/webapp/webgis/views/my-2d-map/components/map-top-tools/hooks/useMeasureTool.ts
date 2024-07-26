@@ -24,14 +24,13 @@ let measureTooltipElement: HTMLElement | null
 const measureTooltip = ref<Overlay>()
 const continuePolygonMsg: string = '点击继续测量面积'
 const continueLineMsg: string = '点击继续测量距离'
-const tooltips = [] as Overlay[] // 记录所有测量产生的的overlay，便于后续移除
-
+const measureTooltips = [] as Overlay[] // 记录所有测量产生的的overlay，便于后续移除
 const measureSource = new VectorSource()
 let measureTool: Draw
 export function useMeasureTool(map: Map, options: IDrawOptions) {
     globalMap = map
     map.on('pointermove', pointerMoveHandler)
-    const { type } = options
+    const { type, justOnce, clearLastTime } = options
     let measureLayer = map.getLayers().getArray().find(layer => layer.get('id') === 'measureLayer')
     if (!measureLayer) { // 如果不存在测量图层，添加
         measureLayer = new VectorLayer({
@@ -49,9 +48,12 @@ export function useMeasureTool(map: Map, options: IDrawOptions) {
     })
     map.addInteraction(measureTool)
     createHelpTooltip()
-    createMeasureTooltip()
     let listener: EventsKey
     measureTool.on('drawstart', (e) => {
+        if (clearLastTime) {
+            clearMeasureFeatures()
+        }
+        createMeasureTooltip()
         currentDrawnFeature = e.feature
         let tooltipCoord = e.target
         listener = currentDrawnFeature.getGeometry()?.on('change', (e) => {
@@ -71,6 +73,14 @@ export function useMeasureTool(map: Map, options: IDrawOptions) {
         }) as EventsKey
     })
     measureTool.on('drawend', (e) => {
+        if (measureTooltipElement) {
+            measureTooltipElement.className = 'tooltip tooltip-static'
+        }
+        if (justOnce) {
+            setTimeout(() => {
+                closeMeasureTool()
+            })
+        }
         measureTooltip.value?.setOffset([0, -7])
         currentDrawnFeature = null
         measureTooltipElement = null
@@ -106,21 +116,22 @@ function createHelpTooltip() {
         helpTooltipElement.parentNode?.removeChild(helpTooltipElement)
     }
     helpTooltipElement = document.createElement('div')
+    helpTooltipElement.className = 'tooltip tooltip-help'
     helpTooltip.value = new Overlay({
         element: helpTooltipElement,
-        offset: [0, -15],
-        positioning: 'bottom-center',
+        offset: [15, 0],
+        positioning: 'center-left',
         stopEvent: false,
         insertFirst: false,
     })
     globalMap.addOverlay(helpTooltip.value)
-    tooltips.push(helpTooltip.value)
 }
 function createMeasureTooltip() {
     if (measureTooltipElement) {
         measureTooltipElement.parentNode?.removeChild(measureTooltipElement)
     }
     measureTooltipElement = document.createElement('div')
+    measureTooltipElement.className = 'tooltip tooltip-measure'
     measureTooltip.value = new Overlay({
         element: measureTooltipElement,
         offset: [0, -15],
@@ -129,7 +140,7 @@ function createMeasureTooltip() {
         insertFirst: false,
     })
     globalMap.addOverlay(measureTooltip.value)
-    tooltips.push(measureTooltip.value)
+    measureTooltips.push(measureTooltip.value)
 }
 function formatLength(line: LineString) {
     const length = getLength(line)
@@ -156,13 +167,14 @@ function formatArea(polygon: Polygon) {
  */
 export function clearMeasureFeatures() {
     measureSource.clear()
+    measureTooltips.forEach(tooltip => {
+        globalMap.removeOverlay(tooltip)
+    })
 }
 /**
  * 关闭测量工具
  */
 export function closeMeasureTool() {
-    measureTool && measureTool.setActive(false)
-    tooltips.forEach(tooltip => {
-        globalMap.removeOverlay(tooltip)
-    })
+    measureTool && globalMap.removeInteraction(measureTool)
+    helpTooltip.value && globalMap.removeOverlay(helpTooltip.value)
 }

@@ -26,6 +26,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import { Style, Fill, Stroke } from 'ol/style'
 import { useMapStore } from '../../store/mapStore'
 import { useDrawTool, clearDrawFeatures, closeDrawTool } from './hooks/useDrawTool'
 import { useMeasureTool, clearMeasureFeatures, closeMeasureTool } from './hooks/useMeasureTool'
@@ -109,7 +110,7 @@ const drawTools = reactive({
  * @param type 
  */
 function initDrawTool(type) {
-    closeMeasureTool()
+    closeMeasureTool() // 关闭测量工具，避免冲突
     const map = mapStore.mapInstance
     drawTool.value && map.removeInteraction(drawTool.value) // 清除绘制工具
     if (type === 'clear') {
@@ -120,7 +121,16 @@ function initDrawTool(type) {
     drawTool.value = useDrawTool(map, { // 添加绘制工具
         type,
         justOnce: false,
-        clearLastTime: true,
+        clearLastTime: false,
+        layerStyle: new Style({
+            fill: new Fill({
+                color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new Stroke({
+                color: '#ffcc33',
+                width: 2
+            })
+        })
     })
 }
 /**
@@ -128,9 +138,8 @@ function initDrawTool(type) {
  * @param type 
  */
 function initMeasureTool(type) {
-    closeDrawTool()
+    closeDrawTool() // 关闭绘制工具，避免冲突
     const map = mapStore.mapInstance
-    measureTool.value && map.removeInteraction(measureTool.value)
     if (type === 'clear') {
         return clearMeasureFeatures()
     } else if (type === 'close') {
@@ -139,7 +148,7 @@ function initMeasureTool(type) {
     measureTool.value = useMeasureTool(map, {
         type,
         justOnce: false,
-        clearLastTime: true,
+        clearLastTime: false,
     })
 }
 
@@ -159,5 +168,42 @@ function initMeasureTool(type) {
             color: #4096ff;
         }
     }
+}
+</style>
+<style>
+/**
+* 测量工具提示框的样式信息
+*/
+.tooltip {
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    color: white;
+    padding: 4px 8px;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+.tooltip-measure {
+    opacity: 1;
+    font-weight: bold;
+}
+.tooltip-static {
+    background-color: #ffcc33;
+    color: black;
+    border: 1px solid white;
+}
+.tooltip-measure:before,
+.tooltip-static:before {
+    border-top: 6px solid rgba(0, 0, 0, 0.5);
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    margin-left: -7px;
+    left: 50%;
+}
+.tooltip-static:before {
+    border-top-color: #ffcc33;
 }
 </style>
