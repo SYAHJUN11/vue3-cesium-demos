@@ -8,9 +8,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
+    ADivider: typeof import('ant-design-vue/es')['Divider']
     ADropdown: typeof import('ant-design-vue/es')['Dropdown']
     AMenu: typeof import('ant-design-vue/es')['Menu']
+    AMenuDivider: typeof import('ant-design-vue/es')['MenuDivider']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
+    APopover: typeof import('ant-design-vue/es')['Popover']
+    ASelect: typeof import('ant-design-vue/es')['Select']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     Index: typeof import('./src/components/cesium-map/src/Index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

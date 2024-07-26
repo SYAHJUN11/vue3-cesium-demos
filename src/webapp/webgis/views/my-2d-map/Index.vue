@@ -20,8 +20,8 @@ import { useMapStore } from './store/mapStore'
 import MapTopTools from './components/map-top-tools/Index.vue'
 import MapBottomTools from './components/map-bottom-tools/Index.vue'
 
+const mapStore = useMapStore()
 function initFinished(map: Map) {
-  const mapStore = useMapStore()
   mapStore.mapInstance = map
 }
 </script>
@@ -33,8 +33,8 @@ function initFinished(map: Map) {
   height: 100vh;
   .map-top-tools-wrapper {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 20px;
+    right: 20px;
     z-index: 2;
   }
   .map-bottom-tools-wrapper {

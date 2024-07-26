@@ -1,86 +1,163 @@
 <template>
     <div class="map-top-tools">
-        <div class="draw">
-            <a-button @click="initDrawTool('Point')">画点</a-button>
-            <a-button @click="initDrawTool('LineString')">画线</a-button>
-            <a-button @click="initDrawTool('Polygon')">画面</a-button>
-            <a-button @click="clearDrawTool">清除</a-button>
-        </div>
-        <div class="measure">
-            <a-button @click="initMeasureTool('Point')">标点</a-button>
-            <a-button @click="initMeasureTool('LineString')">测距</a-button>
-            <a-button @click="initMeasureTool('Polygon')">测面积</a-button>
-            <a-button @click="clearMeasureTool">清除</a-button>
-        </div>
+        <a-dropdown :trigger="['click']">
+            <div class="tool-item">{{ drawTools.title }}</div>
+            <template #overlay>
+                <a-menu v-model="drawTools.activeTool">
+                    <a-menu-item v-for="item in drawTools.children" :key="item.id" @click="initDrawTool(item.type)">
+                        <span>{{ item.label }}</span>
+                    </a-menu-item>
+                </a-menu>
+            </template>
+        </a-dropdown>
+        <a-divider type="vertical" />
+        <a-dropdown :trigger="['click']">
+            <div class="tool-item">{{ measureTools.title }}</div>
+            <template #overlay>
+                <a-menu v-model="measureTools.activeTool">
+                    <a-menu-item v-for="item in measureTools.children" :key="item.id" @click="initMeasureTool(item.type)">
+                        <span>{{ item.label }}</span>
+                    </a-menu-item>
+                </a-menu>
+            </template>
+        </a-dropdown>
     </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
 import { useMapStore } from '../../store/mapStore'
-import { useDrawTool, clearDrawFeatures } from './hooks/useDrawTool'
-import { useMeasureTool, clearMeasureFeatures } from './hooks/useMeasureTool'
+import { useDrawTool, clearDrawFeatures, closeDrawTool } from './hooks/useDrawTool'
+import { useMeasureTool, clearMeasureFeatures, closeMeasureTool } from './hooks/useMeasureTool'
 
 const mapStore = useMapStore()
 const drawTool = ref()
 const measureTool = ref()
+
+const measureTools = reactive({
+    activeTool: '',
+    visible: false,
+    title: '量算工具',
+    children: [
+        {
+            id: 'point',
+            type: 'Point',
+            label: '标点'
+        },
+        {
+            id: 'line-string',
+            type: 'LineString',
+            label: '测距离'
+        },
+        {
+            id: 'polygon',
+            type: 'Polygon',
+            label: '测面积'
+        },
+        {
+            id: 'close',
+            type: 'close',
+            label: '关闭'
+        },
+        {
+            id: 'clear',
+            type: 'clear',
+            label: '清除'
+        },
+    ]
+})
+const drawTools = reactive({
+    activeTool: '',
+    visible: false,
+    title: '绘制工具',
+    children: [
+        {
+            id: 'point',
+            type: 'Point',
+            label: '画点'
+        },
+        {
+            id: 'line-string',
+            type: 'LineString',
+            label: '画线'
+        },
+        {
+            id: 'polygon',
+            type: 'Polygon',
+            label: '画面'
+        },
+        {
+            id: 'circle',
+            type: 'Circle',
+            label: '画圆'
+        },
+        {
+            id: 'close',
+            type: 'close',
+            label: '关闭'
+        },
+        {
+            id: 'clear',
+            type: 'clear',
+            label: '清除'
+        },
+    ]
+})
 
 /**
  * 绘制工具
  * @param type 
  */
 function initDrawTool(type) {
-    clearDrawFeatures()
+    closeMeasureTool()
     const map = mapStore.mapInstance
     drawTool.value && map.removeInteraction(drawTool.value) // 清除绘制工具
-    drawTool.value = useDrawTool(map, {
+    if (type === 'clear') {
+        return clearDrawFeatures()
+    } else if (type === 'close') {
+        return closeDrawTool()
+    }
+    drawTool.value = useDrawTool(map, { // 添加绘制工具
         type,
         justOnce: false,
         clearLastTime: true,
     })
-}
-/**
- * 清除绘制工具
- */
-function clearDrawTool() {
-    clearDrawFeatures()
-    drawTool.value.setActive(false) // 关闭绘制工具
-    drawTool.value && map.removeInteraction(drawTool.value) // 清除绘制工具
 }
 /**
  * 测量工具
  * @param type 
  */
 function initMeasureTool(type) {
+    closeDrawTool()
     const map = mapStore.mapInstance
     measureTool.value && map.removeInteraction(measureTool.value)
+    if (type === 'clear') {
+        return clearMeasureFeatures()
+    } else if (type === 'close') {
+        return closeMeasureTool()
+    }
     measureTool.value = useMeasureTool(map, {
         type,
         justOnce: false,
         clearLastTime: true,
     })
 }
-/**
- * 清除测量工具
- */
-function clearMeasureTool() {
-    clearMeasureFeatures()
-    const map = mapStore.mapInstance
-    measureTool.value.setActive(false)
-    measureTool.value && map.removeInteraction(measureTool.value)
-}
 
 </script>
 
 <style lang="less" scoped>
 .map-top-tools {
-    height: 32px;
-    border-radius: 2px;
-    box-shadow: 0px 0px 16px 0px rgba(127,135,151,0.13);
     display: flex;
-    flex-direction: column;
-    .measure {
-        margin-top: 20px;
+    align-items: center;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 0px 16px 0px rgba(127,135,151,0.13);
+    .tool-item {
+        cursor: pointer;
+        padding: 8px 12px;
+        &:hover {
+            color: #4096ff;
+        }
     }
 }
 </style>

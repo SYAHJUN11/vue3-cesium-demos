@@ -27,6 +27,7 @@ const continueLineMsg: string = '点击继续测量距离'
 const tooltips = [] as Overlay[] // 记录所有测量产生的的overlay，便于后续移除
 
 const measureSource = new VectorSource()
+let measureTool: Draw
 export function useMeasureTool(map: Map, options: IDrawOptions) {
     globalMap = map
     map.on('pointermove', pointerMoveHandler)
@@ -42,7 +43,7 @@ export function useMeasureTool(map: Map, options: IDrawOptions) {
         })
         map.addLayer(measureLayer)
     }
-    const measureTool = new Draw({
+    measureTool = new Draw({
         type,
         source: measureSource,
     })
@@ -155,14 +156,13 @@ function formatArea(polygon: Polygon) {
  */
 export function clearMeasureFeatures() {
     measureSource.clear()
-    console.log('tooltips', tooltips)
+}
+/**
+ * 关闭测量工具
+ */
+export function closeMeasureTool() {
+    measureTool && measureTool.setActive(false)
     tooltips.forEach(tooltip => {
         globalMap.removeOverlay(tooltip)
     })
-    // if (helpTooltip.value) {
-    //     globalMap.removeOverlay(helpTooltip.value)
-    // }
-    // if (measureTooltip.value) {
-    //     globalMap.removeOverlay(measureTooltip.value)
-    // }
 }

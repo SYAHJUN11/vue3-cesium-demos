@@ -11,6 +11,7 @@ interface IDrawOptions {
 }
 
 const drawSource = new VectorSource()
+let drawTool: Draw
 /**
  * 绘制工具
  * @param map 地图 
@@ -30,14 +31,17 @@ export function useDrawTool(map: Map, options: IDrawOptions) {
         })
         map.addLayer(drawLayer)
     }
-    const drawTool = new Draw({
+    drawTool = new Draw({
         type,
         source: drawSource,
     })
     map.addInteraction(drawTool)
     if (justOnce) { // 绘制一次后停止绘制
-        drawTool.on('drawend', () => {
-            drawTool?.setActive(false)
+        drawTool.on('drawend', (e) => {
+            new Promise((resolve) => {
+                drawTool?.setActive(false)
+                resolve(e)
+            })
         })
     }
     if (clearLastTime) { // 清除上次绘制的图形
@@ -53,4 +57,10 @@ export function useDrawTool(map: Map, options: IDrawOptions) {
  */
 export function clearDrawFeatures() {
     drawSource.clear()
+}
+/**
+ * 关闭绘制工具
+ */
+export function closeDrawTool() {
+    drawTool && drawTool.setActive(false)
 }
