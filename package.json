@@ -9,11 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@maptalks/gl-layers": "^0.34.1",
     "ant-design-vue": "^4.2.1",
     "cesium": "^1.117.0",
+    "element-plus": "^2.7.8",
     "less": "^4.2.0",
+    "maptalks": "^1.0.0-rc.39",
+    "maptalks.tileclip": "^0.9.0",
     "ol": "^9.2.2",
     "pinia": "^2.1.7",
+    "three": "^0.169.0",
     "vite-plugin-cesium": "^1.2.22",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2"
